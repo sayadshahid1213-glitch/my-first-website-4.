@@ -4,57 +4,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Website</title>
+    <meta name="theme-color" content="#101114">
+    <meta name="description"
+        content="A personal portfolio documenting my journey as I learn web development and AI-assisted coding.">
+    <title>Developer | Personal Portfolio</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #101114;
-            color: white;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
+        :root {
+            color-scheme: dark;
+            --background: #101114;
+            --surface: #181a1f;
+            --surface-raised: #1e2026;
+            --text: #f7f7f8;
+            --muted: #b8bac3;
+            --accent: #FF5500;
+            --border: #34363d;
+            --content-width: 1080px;
         }
 
-        main {
-            text-align: center;
-            padding: 32px;
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 88px;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        a:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        .container {
+            width: min(var(--content-width), calc(100% - 48px));
+            margin-inline: auto;
+        }
+
+        .site-header {
+            position: sticky;
+            z-index: 10;
+            top: 0;
+            border-bottom: 1px solid rgb(255 255 255 / 8%);
+            background: rgb(16 17 20 / 92%);
+            backdrop-filter: blur(12px);
+        }
+
+        .navigation {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .brand-mark {
+            width: 11px;
+            height: 11px;
+            border-radius: 3px;
+            background: var(--accent);
+            transform: rotate(45deg);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: clamp(18px, 4vw, 36px);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: color 160ms ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .hero {
+            position: relative;
+            display: flex;
+            min-height: min(720px, calc(100svh - 76px));
+            align-items: center;
+            overflow: hidden;
+            padding-block: 100px;
+            border-bottom: 1px solid rgb(255 255 255 / 7%);
+        }
+
+        .hero::after {
+            position: absolute;
+            top: 12%;
+            right: max(-100px, calc((100vw - var(--content-width)) / 2 - 160px));
+            width: clamp(220px, 34vw, 440px);
+            aspect-ratio: 1;
+            border: 1px solid rgb(255 85 0 / 25%);
+            border-radius: 50%;
+            box-shadow: 0 0 0 42px rgb(255 85 0 / 3%), 0 0 0 84px rgb(255 85 0 / 2%);
+            content: "";
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 24px;
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            content: "";
+        }
+
+        h1,
+        h2,
+        p {
+            margin-top: 0;
         }
 
         h1 {
-            font-size: clamp(36px, 7vw, 64px);
-            margin-bottom: 12px;
+            max-width: 780px;
+            margin-bottom: 24px;
+            font-size: clamp(3rem, 8vw, 6.4rem);
+            letter-spacing: -0.065em;
+            line-height: 1.02;
         }
 
-        span {
-            color: #ff5500;
+        .hero-description {
+            max-width: 580px;
+            margin-bottom: 34px;
+            color: var(--muted);
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
         }
 
-        p {
-            color: #b8bac3;
-            line-height: 1.7;
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
         }
 
-        button {
-            background: #ff5500;
-            color: white;
-            border: 0;
-            padding: 13px 22px;
+        .button {
+            display: inline-flex;
+            min-height: 50px;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border: 1px solid transparent;
             border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button-primary {
+            background: var(--accent);
+            color: #17110e;
+        }
+
+        .button-primary:hover {
+            background: #ff7130;
+        }
+
+        .button-secondary {
+            border-color: var(--border);
+            background: transparent;
+            color: var(--text);
+        }
+
+        .button-secondary:hover {
+            border-color: #777982;
+            background: var(--surface);
+        }
+
+        .content-section {
+            padding-block: clamp(72px, 10vw, 120px);
+            border-bottom: 1px solid rgb(255 255 255 / 7%);
+        }
+
+        .section-heading {
+            max-width: 680px;
+            margin-bottom: 38px;
+        }
+
+        .section-heading h2 {
+            margin-bottom: 12px;
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            letter-spacing: -0.045em;
+            line-height: 1.1;
+        }
+
+        .section-heading p,
+        .section-copy {
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .section-copy {
+            max-width: 680px;
+            margin-bottom: 0;
+        }
+
+        .placeholder-card {
+            padding: clamp(24px, 5vw, 40px);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--surface), rgb(24 26 31 / 55%));
+        }
+
+        .placeholder-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.2rem;
+        }
+
+        .placeholder-card p {
+            max-width: 620px;
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .project-card {
+            display: grid;
+            gap: 24px;
+        }
+
+        .project-card h3 {
+            font-size: clamp(1.35rem, 3vw, 1.65rem);
+        }
+
+        .project-details {
+            display: grid;
+            gap: 20px;
+        }
+
+        .technology-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .technology-list li {
+            padding: 5px 11px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--surface-raised);
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-weight: 700;
+            text-decoration: none;
+            transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+        }
+
+        .project-link:hover {
+            border-color: var(--accent);
+            background: rgb(255 85 0 / 10%);
+        }
+
+        .project-link-primary {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #17110e;
+        }
+
+        .project-link-primary:hover {
+            background: #ff7130;
+            color: #17110e;
+        }
+
+        .contact-section {
+            padding-bottom: 100px;
+        }
+
+        .site-footer {
+            padding-block: 24px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .site-footer p {
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: min(100% - 36px, var(--content-width));
+            }
+
+            .navigation {
+                min-height: 68px;
+                gap: 12px;
+            }
+
+            .brand {
+                font-size: 0.92rem;
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .nav-links a {
+                font-size: 0.84rem;
+            }
+
+            .hero {
+                min-height: auto;
+                padding-block: 100px 112px;
+            }
+
+            .hero::after {
+                top: auto;
+                right: -155px;
+                bottom: -180px;
+                width: 300px;
+            }
+
+            .button-row {
+                align-items: stretch;
+            }
+
+            .button {
+                flex: 1 1 165px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .navigation {
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: center;
+                padding-block: 12px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
         }
     </style>
 </head>
 
 <body>
-    <main>
-        <h1>My First <span>Website</span></h1>
-        <p>I am learning to build and deploy websites with AI.</p>
-        <button onclick="alert('My first website is working!')">
-            Test My Website
-        </button>
+    <header class="site-header">
+        <nav class="navigation container" aria-label="Main navigation">
+            <a class="brand" href="#top" aria-label="Developer, back to top">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span>Developer</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="top">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-content container">
+                <p class="eyebrow">Learning by building</p>
+                <h1 id="hero-title">Building ideas into working software.</h1>
+                <p class="hero-description">
+                    I am learning web development and exploring how AI-assisted coding can help turn ideas into useful
+                    things on the web.
+                </p>
+                <div class="button-row">
+                    <a class="button button-primary" href="#projects">Explore Projects</a>
+                    <a class="button button-secondary" href="#about">About Me</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="about" aria-labelledby="about-title">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">A little about me</p>
+                    <h2 id="about-title">Curious, building, learning.</h2>
+                </div>
+                <p class="section-copy">
+                    I am at the beginning of my web development journey. This space is where I will share what I am
+                    learning, the experiments I am trying, and the progress I make along the way.
+                </p>
+            </div>
+        </section>
+
+        <section class="content-section" id="projects" aria-labelledby="projects-title">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">Made along the way</p>
+                    <h2 id="projects-title">Projects</h2>
+                    <p>Small steps, practical experiments, and ideas in progress.</p>
+                </div>
+                <article class="placeholder-card project-card" aria-labelledby="first-project-title">
+                    <div class="project-details">
+                        <div>
+                            <h3 id="first-project-title">My First Website</h3>
+                            <p>A responsive personal website built with HTML and CSS, version-controlled with Git and
+                                GitHub, and deployed on Vercel.</p>
+                        </div>
+                        <ul class="technology-list" aria-label="Technologies used">
+                            <li>HTML</li>
+                            <li>CSS</li>
+                            <li>Git</li>
+                            <li>GitHub</li>
+                            <li>Vercel</li>
+                        </ul>
+                    </div>
+                    <div class="project-links" aria-label="Project links">
+                        <a class="project-link project-link-primary" href="https://my-first-website-4-two.vercel.app/"
+                            target="_blank" rel="noopener noreferrer">Live Demo</a>
+                        <a class="project-link" href="https://github.com/sayadshahid1213-glitch/my-first-website-4"
+                            target="_blank" rel="noopener noreferrer">Source Code</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-section contact-section" id="contact" aria-labelledby="contact-title">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">Get in touch</p>
+                    <h2 id="contact-title">Contact</h2>
+                    <p>Contact information can be added here when you are ready to share it.</p>
+                </div>
+                <div class="placeholder-card">
+                    <p>Thanks for stopping by. This portfolio is a work in progress.</p>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Personal portfolio · Learning in progress</p>
+        </div>
+    </footer>
 </body>
 
 </html>
